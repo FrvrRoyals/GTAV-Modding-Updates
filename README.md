@@ -15,6 +15,11 @@
 ## Latest GTA V Legacy Updates/Patches
 
 <!-- RSS-LEGACY-START -->
+- [Grand Theft Auto V Legacy update for 10 April 2025](https://steamdb.info/patchnotes/17973580/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
+- [Grand Theft Auto V Legacy update for 19 February 2025](https://steamdb.info/patchnotes/17336162/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
+- [Grand Theft Auto V Legacy update for 13 December 2024](https://steamdb.info/patchnotes/16720383/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
+- [Grand Theft Auto V Legacy update for 11 December 2024](https://steamdb.info/patchnotes/16696711/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
+- [Grand Theft Auto V Legacy update for 10 December 2024](https://steamdb.info/patchnotes/16693558/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
 <!-- RSS-LEGACY-END -->
 
 This feed is updated automatically via GitHub Actions on a daily/24-hour basis.
