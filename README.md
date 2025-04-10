@@ -1,6 +1,6 @@
 # GTA V Modding Updates :hammer_and_wrench:
 
-        A repo for updates related to modding dependencies & tools for GTA V.
+    A repo for updates related to modding dependencies & tools for GTA V.
 
 ### Latest GTA V Enhanced Updates/Patches :loudspeaker:
 
