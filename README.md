@@ -12,7 +12,7 @@
 - [Grand Theft Auto V Enhanced update for 6 March 2025](https://steamdb.info/patchnotes/17610727/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
 <!-- RSS-ENHANCED-END -->
 
-## Latest GTA V Legacy Updates/Patches
+## Latest GTA V Legacy Updates/Patches :loudspeaker:
 
 <!-- RSS-LEGACY-START -->
 - [Grand Theft Auto V Legacy update for 10 April 2025](https://steamdb.info/patchnotes/17973580/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
