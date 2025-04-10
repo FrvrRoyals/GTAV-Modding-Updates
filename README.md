@@ -1,8 +1,8 @@
 # GTA V Modding Updates :hammer_and_wrench:
 
-### A repo for updates related to modding dependencies & tools for GTA V
+**A repo for updates related to modding dependencies & tools for GTA V**
 
-# Latest GTA V Enhanced Patches :loudspeaker:
+## Latest GTA V Enhanced Patches :loudspeaker:
 
 <!-- RSS-START -->
 - [Grand Theft Auto V Enhanced update for 10 April 2025](https://steamdb.info/patchnotes/17987055/?utm_source=rss&utm_medium=rss&utm_campaign=Patchnotes)
