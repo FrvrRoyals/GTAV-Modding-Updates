@@ -3,14 +3,14 @@ import feedparser
 feeds = [
     {
         "file": "PatchnotesEnhancedRSS.rss",
-        "start_marker": "<!-- RSS-PATCH-START -->",
-        "end_marker": "<!-- RSS-PATCH-END -->",
+        "start_marker": "<!-- RSS-ENHANCED-START -->",
+        "end_marker": "<!-- RSS-ENHANCED-END -->",
         "max_items": 5
     },
     {
         "file": "PatchnotesLegacyRSS.rss",
-        "start_marker": "<!-- RSS-NEWS-START -->",
-        "end_marker": "<!-- RSS-NEWS-END -->",
+        "start_marker": "<!-- RSS-LEGACY-START -->",
+        "end_marker": "<!-- RSS-LEGACY-END -->",
         "max_items": 5
     }
 ]
