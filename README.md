@@ -2,7 +2,7 @@
 
 **A repo/feed for updates related to GTA V Legacy & Enhanced Edition, along with their most popular/useful modding dependencies & tools.**
 
-### Current GTA versions:
+### Current GTA V game versions:
     Legacy Edition -
     Enhanced Edition -
 
