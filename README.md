@@ -4,7 +4,7 @@
 
 ### Current GTA V game versions:
     Legacy Edition - v1.0.3504.0
-    Enhanced Edition -v1.0.813.11
+    Enhanced Edition - v1.0.813.11
 
 ### GTA V Enhanced Edition Updates/Patches :loudspeaker:
 
