@@ -3,8 +3,8 @@
 **A repo/feed for updates related to GTA V Legacy & Enhanced Edition, along with their most popular/useful modding dependencies & tools.**
 
 ### Current GTA V game versions:
-    Legacy Edition -
-    Enhanced Edition -
+    Legacy Edition - v1.0.3504.0
+    Enhanced Edition -v1.0.813.11
 
 ### GTA V Enhanced Edition Updates/Patches :loudspeaker:
 
