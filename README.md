@@ -2,6 +2,9 @@
 
 **A repo/feed for updates related to GTA V Legacy & Enhanced Edition, along with their most popular/useful modding dependencies & tools.**
 
+> [!TIP]
+> Join my Discord Server [here](https://discord.gg/ywwvZ66QbX) for mod discussions & support.
+
 ### Current GTA V game versions:
     Legacy Edition - v1.0.3504.0
     Enhanced Edition - v1.0.813.11
