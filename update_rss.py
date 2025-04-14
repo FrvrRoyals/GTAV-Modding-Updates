@@ -12,8 +12,8 @@ feeds = [
         "start_marker": "<!-- RSS-LEGACY-START -->",
         "end_marker": "<!-- RSS-LEGACY-END -->",
         "max_items": 5
-    {
-        "url": "https://github.com/dexyfex/CodeWalker/releases.atom",
+    },
+    {   "url": "https://github.com/dexyfex/CodeWalker/releases.atom",
         "start_marker": "<!-- RSS-CODEWALKER-START -->",
         "end_marker": "<!-- CODEWALKER-END -->",
         "title_format": "CodeWalker release for {published}",
