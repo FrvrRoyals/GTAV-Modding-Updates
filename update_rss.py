@@ -11,28 +11,28 @@ feeds = [
         "file": "PatchnotesEnhancedRSS.rss",
         "start_marker": "<!-- RSS-ENHANCED-START -->",
         "end_marker": "<!-- RSS-ENHANCED-END -->",
-        "title_format": "{title}"
+        "title_format": "[{title}]({link})"
     },
     {
         "name": "PatchnotesLegacy",
         "file": "PatchnotesLegacyRSS.rss",
         "start_marker": "<!-- RSS-LEGACY-START -->",
         "end_marker": "<!-- RSS-LEGACY-END -->",
-        "title_format": "{title}"
+        "title_format": "[{title}]({link})"
     },
     {
         "name": "CodeWalker",
         "url": "https://github.com/dexyfex/CodeWalker/releases.atom",
         "start_marker": "<!-- RSS-CODEWALKER-START -->",
         "end_marker": "<!-- RSS-CODEWALKER-END -->",
-        "title_format": "CodeWalker update for {published}"
+        "title_format": "[CodeWalker update for {published}]({link})"
     },
     {
         "name": "SHVDN Nightly",
         "url": "https://github.com/scripthookvdotnet/scripthookvdotnet-nightly/releases.atom",
         "start_marker": "<!-- RSS-SHVDN-START -->",
         "end_marker": "<!-- RSS-SHVDN-END -->",
-        "title_format": "SHVDN Nightly update for {published}"
+        "title_format": "[SHVDN Nightly update for {published}]({link})"
     }
 ]
 
@@ -43,43 +43,41 @@ with open("README.md", "r", encoding="utf-8") as f:
 # Process each feed
 for feed_info in feeds:
     try:
-        if "file" in feed_info:
-            root = ET.parse(feed_info["file"]).getroot()
-        elif "url" in feed_info:
-            response = requests.get(feed_info["url"])
-            response.raise_for_status()
-            root = ET.fromstring(response.content)
-        else:
-            print(f"Skipping feed '{feed_info['name']}' (no source)")
-            continue
-
         entries = []
 
-        for item in root.findall(".//item"):
-            title = item.findtext("title", "No Title")
-            pub_date = item.findtext("pubDate", "")
-            try:
-                published = datetime.strptime(pub_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d %B %Y")
-            except Exception:
-                published = "Unknown date"
-            entries.append(feed_info["title_format"].format(title=title, published=published))
+        if "file" in feed_info:
+            root = ET.parse(feed_info["file"]).getroot()
+            for item in root.findall(".//item"):
+                title = item.findtext("title", "No Title")
+                pub_date = item.findtext("pubDate", "")
+                link = item.findtext("link", "#")
+                try:
+                    published = datetime.strptime(pub_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d %B %Y")
+                except Exception:
+                    published = "Unknown date"
+                entries.append(feed_info["title_format"].format(title=title, published=published, link=link))
 
-        for entry in root.findall(".//{http://www.w3.org/2005/Atom}entry"):
-            title = entry.findtext("{http://www.w3.org/2005/Atom}title", "No Title")
-            updated = entry.findtext("{http://www.w3.org/2005/Atom}updated", "")
-            try:
-                published = datetime.strptime(updated, "%Y-%m-%dT%H:%M:%SZ").strftime("%d %B %Y")
-            except Exception:
-                published = "Unknown date"
-            entries.append(feed_info["title_format"].format(title=title, published=published))
+        elif "url" in feed_info:
+            feed = feedparser.parse(feed_info["url"])
+            for entry in feed.entries[:5]:
+                title = entry.title
+                link = entry.link
+                updated = entry.get("updated", "")
+                try:
+                    published = datetime.strptime(updated, "%Y-%m-%dT%H:%M:%SZ").strftime("%d %B %Y")
+                except Exception:
+                    published = "Unknown date"
+                entries.append(feed_info["title_format"].format(title=title, published=published, link=link))
 
-        entries = entries[:5]
+        if not entries:
+            print(f"No entries found for {feed_info['name']}")
+            continue
 
         start = content.find(feed_info["start_marker"])
         end = content.find(feed_info["end_marker"])
 
         if start == -1 or end == -1:
-            raise ValueError(f"Markers not found for {feed_info.get('file', feed_info.get('url', feed_info.get('name', 'unknown')))}")
+            raise ValueError(f"Markers not found for section '{feed_info['name']}'")
 
         content = (
             content[:start + len(feed_info["start_marker"])] + "\n"
@@ -90,7 +88,7 @@ for feed_info in feeds:
         print(f"Updated section for {feed_info['name']} with {len(entries)} entries.")
 
     except Exception as e:
-        print(f"Error processing feed '{feed_info.get('name', feed_info.get('file', feed_info.get('url', 'unknown')))}': {e}")
+        print(f"Error processing feed '{feed_info['name']}': {e}")
 
 # Save the updated README
 with open("README.md", "w", encoding="utf-8") as f:
