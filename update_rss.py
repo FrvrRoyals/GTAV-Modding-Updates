@@ -54,6 +54,7 @@ for feed_info in feeds:
             continue
 
         entries = []
+
         for item in root.findall(".//item"):
             title = item.findtext("title", "No Title")
             pub_date = item.findtext("pubDate", "")
@@ -85,6 +86,8 @@ for feed_info in feeds:
             + "\n".join(f"- {entry}" for entry in entries) + "\n"
             + content[end:]
         )
+
+        print(f"Updated section for {feed_info['name']} with {len(entries)} entries.")
 
     except Exception as e:
         print(f"Error processing feed '{feed_info.get('name', feed_info.get('file', feed_info.get('url', 'unknown')))}': {e}")
