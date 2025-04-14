@@ -41,8 +41,8 @@
 
 ### ScripthookV Updates :loudspeaker:
 
-<!-- RSS-SHV-START -->
-<!-- RSS-SHV-END -->
+<!-- RSS-SCRIPTHOOKV-START -->
+<!-- RSS-SCRIPTHOOKV-END -->
 
 ### SHVDN Updates :loudspeaker:
 
