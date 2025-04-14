@@ -12,6 +12,17 @@ feeds = [
         "start_marker": "<!-- RSS-LEGACY-START -->",
         "end_marker": "<!-- RSS-LEGACY-END -->",
         "max_items": 5
+    {
+        "url": "https://github.com/dexyfex/CodeWalker/releases.atom",
+        "start_marker": "<!-- RSS-CODEWALKER-START -->",
+        "end_marker": "<!-- CODEWALKER-END -->",
+        "title_format": "CodeWalker release for {published}",
+    },
+    {
+        "url": "https://github.com/scripthookvdotnet/scripthookvdotnet-nightly/releases.atom",
+        "start_marker": "<!-- RSS-SHVDN-START -->",
+        "end_marker": "<!-- RSS-SHVDN-END -->",
+        "title_format": "SHVDN Nightly update for {published}",
     }
 ]
 
