@@ -21,7 +21,7 @@ def fetch_scripthookv():
             continue
 
     if version and date:
-        return [f"- ScriptHookV update for {date.strftime('%d %B %Y')}"]
+        return [f"- [ScriptHookV update for {date.strftime('%d %B %Y')}]({url})"]
     return []
 
 def fetch_openrpf():
@@ -41,7 +41,7 @@ def fetch_openrpf():
             ]):
                 try:
                     date = datetime.strptime(line, "%B %d, %Y")
-                    versions.append(f"- OpenRPF update for {date.strftime('%d %B %Y')}")
+                    versions.append(f"- [OpenRPF update for {date.strftime('%d %B %Y')}]({url})")
                     if len(versions) >= 5:
                         break
                 except ValueError:
@@ -61,11 +61,13 @@ def update_readme_section(prefix, name, entries):
     if start_idx == -1 or end_idx == -1:
         raise ValueError(f"Markers not found: {start_marker} / {end_marker}")
 
-    new_section = f"{start_marker}\n" + "\n".join(entries) + f"\n{end_marker}"
+    new_section = f"{start_marker}\n" + "\n".join(entries[:5]) + f"\n{end_marker}"
     updated = content[:start_idx] + new_section + content[end_idx + len(end_marker):]
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(updated)
+
+    print(f"Updated section for {name} with {len(entries[:5])} entries.")
 
 def main():
     sections = [
@@ -82,7 +84,10 @@ def main():
     ]
 
     for section in sections:
-        update_readme_section(section["prefix"], section["name"], section["entries"])
+        try:
+            update_readme_section(section["prefix"], section["name"], section["entries"])
+        except Exception as e:
+            print(f"Error updating section {section['name']}: {e}")
 
 if __name__ == "__main__":
     main()
