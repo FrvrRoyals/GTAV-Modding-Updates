@@ -31,8 +31,8 @@
 
 ### Codewalker Releases & Nightly Updates :loudspeaker:
 
-<!-- RSS-CW-START -->
-<!-- RSS-CW-END -->
+<!-- RSS-CODEWALKER-START -->
+<!-- RSS-CODEWALKER-END -->
 
 ### OpenRPF Updates :loudspeaker:
 
@@ -49,6 +49,6 @@
 <!-- RSS-SHVDN-START -->
 <!-- RSS-SHVDN-END -->
 
-This feed is updated automatically via GitHub Actions on an hourly basis.
+All feeds are updated automatically, or can be triggered manually via. GitHub Actions on an hourly basis.
 
 
