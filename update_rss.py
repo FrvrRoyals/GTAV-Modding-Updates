@@ -10,8 +10,7 @@ def fetch_feed_entries(url, limit=10):
         title = entry.get("title", "No title")
         link = entry.get("link", "#")
         date = entry.get("published", entry.get("updated", ""))
-        formatted_date = f"({date})" if date else ""
-        entries.append(f"- [{title}]({link}) {formatted_date}")
+        entries.append(f"- [{title}]({link}) ({date})")
 
     return entries
 
