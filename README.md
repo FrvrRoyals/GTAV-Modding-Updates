@@ -24,7 +24,7 @@
 
 <!-- RSS-LEGACY-END -->
 
-### Codewalker Releases & Nightly Updates :loudspeaker:
+### Codewalker Nightly Updates/Commits :loudspeaker:
 
 <!-- RSS-CODEWALKER-START -->
 - [ModManager progress (485d56b)](https://github.com/dexyfex/CodeWalker/commit/485d56bec00262ed7fa472261cce7bbc6202b96e)
@@ -34,24 +34,24 @@
 - [Added missing shader to gen9 conversion xml (3c9a846)](https://github.com/dexyfex/CodeWalker/commit/3c9a846a49071e5ba4feac306d21ef318d38a66c)
 <!-- RSS-CODEWALKER-END -->
 
-### OpenRPF Updates :loudspeaker:
+### OpenRPF Updates/Releases :loudspeaker:
 
 <!-- RSS-OPENRPF-START -->
 
 <!-- RSS-OPENRPF-END -->
 
-### ScripthookV Updates :loudspeaker:
+### ScripthookV Updates/Releases :loudspeaker:
 
 <!-- RSS-SCRIPTHOOKV-START -->
 
 <!-- RSS-SCRIPTHOOKV-END -->
 
-### SHVDN Updates :loudspeaker:
+### SHVDN Nightly Updates/Releases :loudspeaker:
 
 <!-- RSS-SHVDN-START -->
 
 <!-- RSS-SHVDN-END -->
 
-All feeds are updated automatically, or can be triggered manually via. GitHub Actions on an hourly basis.
+All feeds are updated automatically on an hourly basis, or can be triggered manually via. GitHub Actions.
 
 
