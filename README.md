@@ -1,9 +1,9 @@
-# GTA V Modding Updates :hammer_and_wrench:
-
 > [!WARNING] 
 > This is currently work in progress project, expect certain features/parts to be missing or not working.
 
-**A repo/feed for updates related to GTA V Legacy & Enhanced Edition, along with their most popular/useful modding dependencies & tools.**
+# GTA V Modding Updates :hammer_and_wrench:
+
+**A feed/repository for patches and updates related to GTA V Legacy & Enhanced Edition, along with updates for their most popular/useful modding dependencies & tools.**
 
 > [!TIP]
 > Join my Discord Server [here](https://discord.gg/ywwvZ66QbX) for mod discussions & support.
