@@ -9,9 +9,10 @@ def fetch_feed_entries(path, limit=10):
     for entry in feed.entries[:limit]:
         title = entry.get("title", "No title")
         link = entry.get("link", "#")
-        date = entry.get("published", entry.get("updated", ""))
-        entries.append(f"- [{title}]({link}) ({date})")
-
+        if "20" in link:  # keep date if it's part of the link
+            entries.append(f"- [{title}]({link})")
+        else:
+            entries.append(f"- [{title}]({link})")
     return entries
 
 def fetch_codewalker_commits(limit=10):
@@ -25,6 +26,19 @@ def fetch_codewalker_commits(limit=10):
         msg = commit["commit"]["message"].split("\n")[0]
         url = commit["html_url"]
         entries.append(f"- [{msg} ({sha})]({url})")
+
+    return entries
+
+def fetch_shvdn_releases(limit=10):
+    url = "https://api.github.com/repos/scripthookvdotnet/scripthookvdotnet-nightly/releases"
+    response = requests.get(url)
+    releases = response.json()
+    entries = []
+
+    for release in releases[:limit]:
+        tag = release["tag_name"]
+        html_url = release["html_url"]
+        entries.append(f"- [SHVDN Nightly {tag}]({html_url})")
 
     return entries
 
@@ -51,13 +65,15 @@ def main():
     sources = [
         ("ENHANCED", "RSS", "PatchnotesEnhancedRSS.rss"),
         ("LEGACY", "RSS", "PatchnotesLegacyRSS.rss"),
-        ("SHVDN", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
+        ("SHVDN", "RSS", None),
         ("CODEWALKER", "RSS", None)
     ]
 
     for name, prefix, path in sources:
         if name == "CODEWALKER":
             entries = fetch_codewalker_commits()
+        elif name == "SHVDN":
+            entries = fetch_shvdn_releases()
         else:
             entries = fetch_feed_entries(path)
         print(f"Updated section for {name} with {len(entries)} entries.")
