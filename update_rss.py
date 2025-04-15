@@ -1,95 +1,68 @@
-import os
+import feedparser
 import re
-import requests
-import xml.etree.ElementTree as ET
 from datetime import datetime
 
-feeds = [
-    {
-        "name": "PatchnotesEnhanced",
-        "file": "PatchnotesEnhancedRSS.rss",
-        "start_marker": "<!-- RSS-ENHANCED-START -->",
-        "end_marker": "<!-- RSS-ENHANCED-END -->",
-        "title_format": "{title}"
-    },
-    {
-        "name": "PatchnotesLegacy",
-        "file": "PatchnotesLegacyRSS.rss",
-        "start_marker": "<!-- RSS-LEGACY-START -->",
-        "end_marker": "<!-- RSS-LEGACY-END -->",
-        "title_format": "{title}"
-    },
-    {
-        "name": "CodeWalker",
-        "url": "https://github.com/dexyfex/CodeWalker/releases.atom",
-        "start_marker": "<!-- RSS-CODEWALKER-START -->",
-        "end_marker": "<!-- RSS-CODEWALKER-END -->",
-        "title_format": "CodeWalker update for {published}"
-    },
-    {
-        "name": "SHVDN Nightly",
-        "url": "https://github.com/scripthookvdotnet/scripthookvdotnet-nightly/releases.atom",
-        "start_marker": "<!-- RSS-SHVDN-START -->",
-        "end_marker": "<!-- RSS-SHVDN-END -->",
-        "title_format": "SHVDN Nightly update for {published}"
-    }
-]
+def fetch_feed_entries(url, limit=5):
+    feed = feedparser.parse(url)
+    entries = []
 
-with open("README.md", "r", encoding="utf-8") as f:
-    content = f.read()
+    for entry in feed.entries[:limit]:
+        title = entry.get("title", "No title")
+        link = entry.get("link", "#")
+        date = entry.get("published", entry.get("updated", ""))
+        entries.append(f"- [{title}]({link}) ({date})")
 
-for feed_info in feeds:
-    try:
-        if "file" in feed_info:
-            root = ET.parse(feed_info["file"]).getroot()
-        elif "url" in feed_info:
-            response = requests.get(feed_info["url"])
-            response.raise_for_status()
-            root = ET.fromstring(response.content)
+    return entries
+
+def fetch_codewalker_commits(limit=5):
+    import requests
+    url = "https://api.github.com/repos/dexyfex/CodeWalker/commits"
+    response = requests.get(url)
+    commits = response.json()
+    entries = []
+
+    for commit in commits[:limit]:
+        sha = commit["sha"][:7]
+        msg = commit["commit"]["message"].split("\n")[0]
+        url = commit["html_url"]
+        entries.append(f"- [{msg} ({sha})]({url})")
+
+    return entries
+
+def update_readme_section(prefix, name, entries):
+    start_marker = f"<!-- {prefix}-{name}-START -->"
+    end_marker = f"<!-- {prefix}-{name}-END -->"
+
+    with open("README.md", "r", encoding="utf-8") as f:
+        content = f.read()
+
+    start_idx = content.find(start_marker)
+    end_idx = content.find(end_marker)
+
+    if start_idx == -1 or end_idx == -1:
+        raise ValueError(f"Markers not found: {start_marker} / {end_marker}")
+
+    section = f"{start_marker}\n" + "\n".join(entries[:5]) + f"\n{end_marker}"
+    updated = content[:start_idx] + section + content[end_idx + len(end_marker):]
+
+    with open("README.md", "w", encoding="utf-8") as f:
+        f.write(updated)
+
+def main():
+    sources = [
+        ("PatchnotesEnhanced", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/enhanced.xml"),
+        ("PatchnotesLegacy", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/legacy.xml"),
+        ("SHVDN Nightly", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
+        ("CodeWalker", "RSS", None)
+    ]
+
+    for name, prefix, url in sources:
+        if name == "CodeWalker":
+            entries = fetch_codewalker_commits()
         else:
-            print(f"Skipping feed '{feed_info['name']}' (no source)")
-            continue
+            entries = fetch_feed_entries(url)
+        print(f"Updated section for {name} with {len(entries)} entries.")
+        update_readme_section(prefix, name.upper().replace(" ", ""), entries)
 
-        entries = []
-
-        for item in root.findall(".//item"):
-            title = item.findtext("title", "No Title")
-            pub_date = item.findtext("pubDate", "")
-            try:
-                published = datetime.strptime(pub_date, "%a, %d %b %Y %H:%M:%S %Z").strftime("%d %B %Y")
-            except Exception:
-                published = "Unknown date"
-            entries.append(feed_info["title_format"].format(title=title, published=published))
-
-        for entry in root.findall(".//{http://www.w3.org/2005/Atom}entry"):
-            title = entry.findtext("{http://www.w3.org/2005/Atom}title", "No Title")
-            updated = entry.findtext("{http://www.w3.org/2005/Atom}updated", "")
-            try:
-                published = datetime.strptime(updated, "%Y-%m-%dT%H:%M:%SZ").strftime("%d %B %Y")
-            except Exception:
-                published = "Unknown date"
-            entries.append(feed_info["title_format"].format(title=title, published=published))
-
-        if not entries:
-            print(f"No entries found for {feed_info['name']}")
-        else:
-            entries = entries[:5]
-            print(f"Updated section for {feed_info['name']} with {len(entries)} entries.")
-
-        start = content.find(feed_info["start_marker"])
-        end = content.find(feed_info["end_marker"])
-
-        if start == -1 or end == -1:
-            raise ValueError(f"Markers not found for {feed_info['name']}")
-
-        content = (
-            content[:start + len(feed_info["start_marker"])] + "\n"
-            + "\n".join(f"- {entry}" for entry in entries) + "\n"
-            + content[end:]
-        )
-
-    except Exception as e:
-        print(f"Error processing feed '{feed_info['name']}': {e}")
-
-with open("README.md", "w", encoding="utf-8") as f:
-    f.write(content)
+if __name__ == "__main__":
+    main()
