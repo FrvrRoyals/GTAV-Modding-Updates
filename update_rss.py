@@ -2,7 +2,7 @@ import feedparser
 import requests
 from datetime import datetime
 
-def fetch_feed_entries(url, limit=5):
+def fetch_feed_entries(url, limit=10):
     feed = feedparser.parse(url)
     entries = []
 
@@ -10,11 +10,12 @@ def fetch_feed_entries(url, limit=5):
         title = entry.get("title", "No title")
         link = entry.get("link", "#")
         date = entry.get("published", entry.get("updated", ""))
-        entries.append(f"- [{title}]({link}) ({date})")
+        formatted_date = f"({date})" if date else ""
+        entries.append(f"- [{title}]({link}) {formatted_date}")
 
     return entries
 
-def fetch_codewalker_commits(limit=5):
+def fetch_codewalker_commits(limit=10):
     url = "https://api.github.com/repos/dexyfex/CodeWalker/commits"
     response = requests.get(url)
     commits = response.json()
@@ -41,7 +42,7 @@ def update_readme_section(prefix, name, entries):
     if start_idx == -1 or end_idx == -1:
         raise ValueError(f"Markers not found: {start_marker} / {end_marker}")
 
-    section = f"{start_marker}\n" + "\n".join(entries[:5]) + f"\n{end_marker}"
+    section = f"{start_marker}\n" + "\n".join(entries[:10]) + f"\n{end_marker}"
     updated = content[:start_idx] + section + content[end_idx + len(end_marker):]
 
     with open("README.md", "w", encoding="utf-8") as f:
