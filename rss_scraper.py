@@ -2,26 +2,37 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+def parse_date_multiple_formats(line):
+    formats = ["%B %d, %Y", "%d %b %Y", "%d %B %Y", "%d/%m/%Y", "%d/%m/%y", "%d %b %y", "%d %B %y"]
+    for fmt in formats:
+        try:
+            return datetime.strptime(line, fmt)
+        except ValueError:
+            continue
+    return None
+
 def fetch_scripthookv():
     url = "http://www.dev-c.com/gtav/scripthookv/"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     content = soup.find("div", class_="post-content")
     if not content:
+        print("Could not find content section on ScriptHookV page")
         return []
 
     lines = [line.strip() for line in content.get_text(separator="\n").splitlines() if line.strip()]
     version = next((line for line in lines if "Version" in line), None)
     date = None
     for line in lines:
-        try:
-            date = datetime.strptime(line.strip(), "%B %d, %Y")
+        parsed_date = parse_date_multiple_formats(line)
+        if parsed_date:
+            date = parsed_date
             break
-        except ValueError:
-            continue
 
     if version and date:
-        return [f"- [ScriptHookV update for {date.strftime('%d %B %Y')}]({url})"]
+        print(f"Found ScriptHookV version: {version}, date: {date.strftime('%d %B %Y')}")
+        return [f"- ScriptHookV update for {date.strftime('%d %B %Y')}"]
+    print("No valid version or date found for ScriptHookV")
     return []
 
 def fetch_openrpf():
@@ -31,21 +42,23 @@ def fetch_openrpf():
     versions = []
 
     changelog_section = soup.find("div", class_="description")
-    if changelog_section:
-        lines = changelog_section.get_text(separator="\n").splitlines()
-        for line in lines:
-            line = line.strip()
-            if any(month in line for month in [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ]):
-                try:
-                    date = datetime.strptime(line, "%B %d, %Y")
-                    versions.append(f"- [OpenRPF update for {date.strftime('%d %B %Y')}]({url})")
-                    if len(versions) >= 5:
-                        break
-                except ValueError:
-                    continue
+    if not changelog_section:
+        print("Could not find changelog section on OpenRPF page")
+        return []
+
+    lines = changelog_section.get_text(separator="\n").splitlines()
+    for line in lines:
+        line = line.strip()
+        parsed_date = parse_date_multiple_formats(line)
+        if parsed_date:
+            versions.append(f"- OpenRPF update for {parsed_date.strftime('%d %B %Y')}")
+            if len(versions) >= 5:
+                break
+
+    if versions:
+        print(f"Found {len(versions)} OpenRPF updates.")
+    else:
+        print("No valid updates found for OpenRPF")
     return versions
 
 def update_readme_section(prefix, name, entries):
@@ -66,7 +79,6 @@ def update_readme_section(prefix, name, entries):
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(updated)
-
     print(f"Updated section for {name} with {len(entries[:5])} entries.")
 
 def main():
@@ -84,10 +96,7 @@ def main():
     ]
 
     for section in sections:
-        try:
-            update_readme_section(section["prefix"], section["name"], section["entries"])
-        except Exception as e:
-            print(f"Error updating section {section['name']}: {e}")
+        update_readme_section(section["prefix"], section["name"], section["entries"])
 
 if __name__ == "__main__":
     main()
