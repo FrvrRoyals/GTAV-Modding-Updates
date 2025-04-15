@@ -9,10 +9,18 @@ def fetch_feed_entries(path, limit=10):
     for entry in feed.entries[:limit]:
         title = entry.get("title", "No title")
         link = entry.get("link", "#")
-        if "20" in link:  # keep date if it's part of the link
-            entries.append(f"- [{title}]({link})")
+        date = entry.get("published", entry.get("updated", ""))
+        # Only show date if it's not already part of the hyperlink
+        if "://" in link and date and date not in link:
+            try:
+                parsed_date = datetime.strptime(date, "%a, %d %b %Y %H:%M:%S %Z")
+                date_str = f" {parsed_date.strftime('%Y-%m-%d')}"
+            except ValueError:
+                date_str = ""
         else:
-            entries.append(f"- [{title}]({link})")
+            date_str = ""
+        entries.append(f"- [{title}{date_str}]({link})")
+
     return entries
 
 def fetch_codewalker_commits(limit=10):
@@ -25,20 +33,8 @@ def fetch_codewalker_commits(limit=10):
         sha = commit["sha"][:7]
         msg = commit["commit"]["message"].split("\n")[0]
         url = commit["html_url"]
-        entries.append(f"- [{msg} ({sha})]({url})")
-
-    return entries
-
-def fetch_shvdn_releases(limit=10):
-    url = "https://api.github.com/repos/scripthookvdotnet/scripthookvdotnet-nightly/releases"
-    response = requests.get(url)
-    releases = response.json()
-    entries = []
-
-    for release in releases[:limit]:
-        tag = release["tag_name"]
-        html_url = release["html_url"]
-        entries.append(f"- [SHVDN Nightly {tag}]({html_url})")
+        date_str = commit["commit"]["author"]["date"][:10]  # ISO format date
+        entries.append(f"- [{msg} ({sha}) {date_str}]({url})")
 
     return entries
 
@@ -65,15 +61,13 @@ def main():
     sources = [
         ("ENHANCED", "RSS", "PatchnotesEnhancedRSS.rss"),
         ("LEGACY", "RSS", "PatchnotesLegacyRSS.rss"),
-        ("SHVDN", "RSS", None),
+        ("SHVDN", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
         ("CODEWALKER", "RSS", None)
     ]
 
     for name, prefix, path in sources:
         if name == "CODEWALKER":
             entries = fetch_codewalker_commits()
-        elif name == "SHVDN":
-            entries = fetch_shvdn_releases()
         else:
             entries = fetch_feed_entries(path)
         print(f"Updated section for {name} with {len(entries)} entries.")
