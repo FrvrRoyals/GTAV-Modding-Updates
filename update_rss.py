@@ -50,9 +50,9 @@ def update_readme_section(prefix, name, entries):
 
 def main():
     sources = [
-        ("PatchnotesEnhanced", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/enhanced.xml"),
-        ("PatchnotesLegacy", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/legacy.xml"),
-        ("SHVDN Nightly", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
+        ("Enhanced", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/enhanced.xml"),
+        ("Legacy", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/legacy.xml"),
+        ("SHVDN", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
         ("CodeWalker", "RSS", None)
     ]
 
