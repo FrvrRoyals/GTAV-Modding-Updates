@@ -30,8 +30,10 @@ def fetch_scripthookv():
     date = parse_date(date_value.text) if date_value else None
     version = version_value.text.strip() if version_value else "Unknown"
 
+    download_link = url  # Best approximation since no direct file URL is exposed
+
     if date:
-        return [f"- [ScriptHookV {version} (Released {date.strftime('%d %b %Y')})](http://www.dev-c.com/gtav/scripthookv/)"]
+        return [f"- [ScriptHookV {version}](http://www.dev-c.com/gtav/scripthookv/)"]
     return []
 
 def fetch_openrpf():
@@ -45,11 +47,11 @@ def fetch_openrpf():
         for entry in changelog.find_all("li")[:10]:
             date_tag = entry.find("span", class_="date")
             version_tag = entry.find("strong")
+            download_button = entry.find("a", class_="download-link")
             if date_tag and version_tag:
-                date = parse_date(date_tag.text)
                 version = version_tag.text.strip()
-                if date:
-                    versions.append(f"- [OpenRPF {version} (Released {date.strftime('%d %b %Y')})]({url})")
+                link = url  # Could try to parse download link more precisely
+                versions.append(f"- [OpenRPF {version}]({link})")
 
     return versions
 
