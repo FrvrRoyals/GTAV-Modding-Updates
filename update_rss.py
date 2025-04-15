@@ -2,8 +2,8 @@ import feedparser
 import requests
 from datetime import datetime
 
-def fetch_feed_entries(url, limit=10):
-    feed = feedparser.parse(url)
+def fetch_feed_entries(path, limit=10):
+    feed = feedparser.parse(path)
     entries = []
 
     for entry in feed.entries[:limit]:
@@ -49,17 +49,17 @@ def update_readme_section(prefix, name, entries):
 
 def main():
     sources = [
-        ("ENHANCED", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/enhanced.xml"),
-        ("LEGACY", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/legacy.xml"),
+        ("ENHANCED", "RSS", "PatchnotesEnhancedRSS.rss"),
+        ("LEGACY", "RSS", "PatchnotesLegacyRSS.rss"),
         ("SHVDN", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
         ("CODEWALKER", "RSS", None)
     ]
 
-    for name, prefix, url in sources:
+    for name, prefix, path in sources:
         if name == "CODEWALKER":
             entries = fetch_codewalker_commits()
         else:
-            entries = fetch_feed_entries(url)
+            entries = fetch_feed_entries(path)
         print(f"Updated section for {name} with {len(entries)} entries.")
         update_readme_section(prefix, name, entries)
 
