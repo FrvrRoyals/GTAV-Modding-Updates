@@ -1,5 +1,5 @@
 import feedparser
-import re
+import requests
 from datetime import datetime
 
 def fetch_feed_entries(url, limit=5):
@@ -15,7 +15,6 @@ def fetch_feed_entries(url, limit=5):
     return entries
 
 def fetch_codewalker_commits(limit=5):
-    import requests
     url = "https://api.github.com/repos/dexyfex/CodeWalker/commits"
     response = requests.get(url)
     commits = response.json()
@@ -50,19 +49,19 @@ def update_readme_section(prefix, name, entries):
 
 def main():
     sources = [
-        ("Enhanced", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/enhanced.xml"),
-        ("Legacy", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/legacy.xml"),
+        ("ENHANCED", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/enhanced.xml"),
+        ("LEGACY", "RSS", "https://raw.githubusercontent.com/VincentEsche/patchnotes/main/legacy.xml"),
         ("SHVDN", "RSS", "https://ci.appveyor.com/nuget/scripthookvdotnet-nightly"),
-        ("CodeWalker", "RSS", None)
+        ("CODEWALKER", "RSS", None)
     ]
 
     for name, prefix, url in sources:
-        if name == "CodeWalker":
+        if name == "CODEWALKER":
             entries = fetch_codewalker_commits()
         else:
             entries = fetch_feed_entries(url)
         print(f"Updated section for {name} with {len(entries)} entries.")
-        update_readme_section(prefix, name.upper().replace(" ", ""), entries)
+        update_readme_section(prefix, name, entries)
 
 if __name__ == "__main__":
     main()
