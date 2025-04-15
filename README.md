@@ -12,27 +12,23 @@
 ### GTA V Enhanced Edition Updates/Patches :loudspeaker:
 
 <!-- RSS-ENHANCED-START -->
-- Grand Theft Auto V Enhanced update for 10 April 2025
-- Grand Theft Auto V Enhanced update for 19 March 2025
-- Grand Theft Auto V Enhanced update for 13 March 2025
-- Grand Theft Auto V Enhanced update for 7 March 2025
-- Grand Theft Auto V Enhanced update for 6 March 2025
+
 <!-- RSS-ENHANCED-END -->
 
 ### GTA V Legacy Edition Updates/Patches :loudspeaker:
 
 <!-- RSS-LEGACY-START -->
-- Grand Theft Auto V Legacy update for 10 April 2025
-- Grand Theft Auto V Legacy update for 19 February 2025
-- Grand Theft Auto V Legacy update for 13 December 2024
-- Grand Theft Auto V Legacy update for 11 December 2024
-- Grand Theft Auto V Legacy update for 10 December 2024
+
 <!-- RSS-LEGACY-END -->
 
 ### Codewalker Releases & Nightly Updates :loudspeaker:
 
 <!-- RSS-CODEWALKER-START -->
-
+- [ModManager progress (485d56b)](https://github.com/dexyfex/CodeWalker/commit/485d56bec00262ed7fa472261cce7bbc6202b96e)
+- [Made XML readers more tolerant to comments (b5a471f)](https://github.com/dexyfex/CodeWalker/commit/b5a471fee8d3956ea1158135c5504f0313ce8c02)
+- [Update RoomBBs on Change. White box unlink (#325) (967af0a)](https://github.com/dexyfex/CodeWalker/commit/967af0a0c0792cd9fa998694b5c75f2080dafb3f)
+- [Gen9 converter fix for glass fragments (9b21a84)](https://github.com/dexyfex/CodeWalker/commit/9b21a84f5684ea7336984a1b4441cc509a5624d8)
+- [Added missing shader to gen9 conversion xml (3c9a846)](https://github.com/dexyfex/CodeWalker/commit/3c9a846a49071e5ba4feac306d21ef318d38a66c)
 <!-- RSS-CODEWALKER-END -->
 
 ### OpenRPF Updates :loudspeaker:
@@ -50,11 +46,7 @@
 ### SHVDN Updates :loudspeaker:
 
 <!-- RSS-SHVDN-START -->
-- SHVDN Nightly update for 14 April 2025
-- SHVDN Nightly update for 08 March 2025
-- SHVDN Nightly update for 20 February 2025
-- SHVDN Nightly update for 14 February 2025
-- SHVDN Nightly update for 05 February 2025
+
 <!-- RSS-SHVDN-END -->
 
 All feeds are updated automatically, or can be triggered manually via. GitHub Actions on an hourly basis.
