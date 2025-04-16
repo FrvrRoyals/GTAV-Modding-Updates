@@ -1,5 +1,5 @@
 > [!WARNING] 
-> This is currently work in progress project, expect certain features/parts to be missing or not working.
+> This is currently work in progress project, expect certain features/parts to be missing, work in progress, or not working as intended.
 
 # GTA V Modding Updates :hammer_and_wrench:
 
