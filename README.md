@@ -3,7 +3,9 @@
 
 # GTA V Modding Updates :hammer_and_wrench:
 
-**A feed/repository for patches and updates related to GTA V Legacy & Enhanced Edition, along with updates for their most popular/useful modding dependencies & tools.**
+### A feed/repository for patches and updates related to GTA V Legacy & Enhanced Edition, along with updates for their most popular/useful modding dependencies & tools.
+
+Hosted at the **[Royals' Development Website](https://frvrroyals.github.io/releases.html)**
 
 > [!TIP]
 > Join my Discord Server [here](https://discord.gg/ywwvZ66QbX) for mod discussions & support.
