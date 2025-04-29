@@ -77,4 +77,6 @@ Hosted at the **[Royals' Development Website](https://frvrroyals.github.io/relea
 
 All feeds are updated automatically on an hourly basis, or can be triggered manually via. GitHub Actions.
 
+[© Royals’ Development 2025](LICENCE.md/)
+
 
