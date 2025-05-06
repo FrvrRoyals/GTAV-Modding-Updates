@@ -3,7 +3,7 @@
 
 # GTA V Modding Updates :hammer_and_wrench:
 
-### NOTE: My current plans are to archive this repo and move it's contents into a new one, the new repo will house all modding updates for my mods and/or modpacks, instead of individual repos like this one.
+**NOTE: My current plans are to archive this repo and move it's contents into a new one, the new repo will house all modding updates for my mods and/or modpacks, instead of individual repos like this one.**
 
 ### A feed/repository for patches and updates related to GTA V Legacy & Enhanced Edition, along with updates for their most popular/useful modding dependencies & tools.
 
